@@ -1,23 +1,28 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "sensor_msgs/LaserScan.h"
+#include "geometry_msgs/Twist.h"
 
 class Move {
  public:
     Move(ros::NodeHandle& n);
     void callback(const sensor_msgs::LaserScan::ConstPtr& msg);
 
- // private:
- //  ros::Subscriber laserscan;
+ private:
+    ros::Subscriber laserscan;
+    ros::Publisher pub;
+    geometry_msgs::Twist velocity;
 };
 
 void Move::callback(const sensor_msgs::LaserScan::ConstPtr& msg) {
   ROS_INFO("Laser scan heard: %f", msg->ranges[0]);
+  velocity.angular.z = 0.1;
+  pub.publish(velocity);
 }
 
 Move::Move(ros::NodeHandle& n) {
-  //laserscan = n.subscribe("/scan", 1000, &Move::callback);
-  ros::Subscriber laserscan = n.subscribe("/scan", 1000, &Move::callback, this);
+  laserscan = n.subscribe("/scan", 1000, &Move::callback, this);
+  pub = n.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
   ros::Rate loop_rate(2);
   while (n.ok()) {
     ros::spinOnce();
