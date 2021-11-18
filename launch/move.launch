@@ -1,5 +1,10 @@
 <launch>
-      <include file="$(find turtlebot3_gazebo)/launch/turtlebot3_world.launch">
+      <include 
+	file="$(find turtlebot3_gazebo)/launch/turtlebot3_world.launch">
       </include>
+
+     <node 
+	name="move" pkg="turtlebot_obstacle_avoidence" type="move" output="screen">
+     </node>
 </launch>
 
