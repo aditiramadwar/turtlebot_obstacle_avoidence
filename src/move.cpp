@@ -21,9 +21,14 @@ void Move::callback(const sensor_msgs::LaserScan::ConstPtr& msg) {
       distance = msg->ranges[i];
   }
   ROS_INFO("Laser scan heard: %f", distance);
-  if (distance < 0.4) {
-    ROS_INFO("Very close!");
+  if (distance < 0.4 && distance > 0.2) {
+    ROS_INFO("Obstacle detected!");
     velocity.linear.x = 0.0;
+    velocity.angular.z = 1.0;
+  }
+  else if(distance < 0.2) {
+    ROS_INFO("Obstacle is very close!");
+    velocity.linear.x = -0.1;
     velocity.angular.z = 1.0;
   }
   else {
