@@ -45,11 +45,13 @@ class Move {
  public:
     explicit Move(ros::NodeHandle& n);
     void callback(const sensor_msgs::LaserScan::ConstPtr& msg);
+    void avoidObstacles(double distance);
 
  private:
     ros::Subscriber laserscan;
     ros::Publisher pub;
     geometry_msgs::Twist velocity;
+    double distance = 1000;
 };
 
 /**
@@ -61,23 +63,32 @@ class Move {
  * @param msg Data collected by the laser and shared over the /scan topic
  */
 void Move::callback(const sensor_msgs::LaserScan::ConstPtr& msg) {
-  float distance = 1000;
   // Evaluated the distance of the closest obstacle ahead
-  for (int i = 0; i < 60; i++) {
+  distance = 1000;
+  for (int i = 0; i < 75; i++) {
     if (msg->ranges[i] < distance)
       distance = msg->ranges[i];
   }
-  ROS_INFO("Laser scan heard: %f", distance);
-  if (distance < 0.4 && distance > 0.2) {
+  avoidObstacles(distance);
+}
+
+/**
+ * @brief A method to compute the distance measured by the turtlebot and avoid
+ *        obstacles, if any, by turning the robot the other way.
+ * 
+ * @param distance 
+ */
+void Move::avoidObstacles(double distance) {
+    if (distance < 0.4 && distance > 0.2) {
   // If obstacle is detected then make robot take a turn to avoid it
     ROS_INFO("Obstacle detected!");
     velocity.linear.x = 0.0;
-    velocity.angular.z = 1.0;
-  } else if (distance < 0.2) {
+    velocity.angular.z = 1.5;
+  } else if (distance <= 0.2) {
     // If robot is too close to the obstacle then turn backwards
     ROS_INFO("Obstacle is very close!");
     velocity.linear.x = -0.1;
-    velocity.angular.z = 1.0;
+    velocity.angular.z = 1.5;
   } else {
     // If obstacle is far enough then keep going ahead
     ROS_INFO("Safe");
