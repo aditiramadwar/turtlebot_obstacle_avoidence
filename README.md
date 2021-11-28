@@ -31,14 +31,13 @@ By default the rosbag recording is *disabled*, to enable the recording, run this
 #### Play back the bag file with the Listener node demonstration: 
 1. Stop the launch file and, Terminal 1:
 ```
-    roscore
+roscore
 ```
  2. Run the listener node, Terminal 2:
 ```
-    rosrun turtlebot_obstacle_avoidence move
+rosrun turtlebot_obstacle_avoidence move
 ```
   3. Play the recorded rosbag, Terminal 3:
 ```
-    rosbag play results/topics.bag
+rosbag play results/topics.bag
 ```
-
