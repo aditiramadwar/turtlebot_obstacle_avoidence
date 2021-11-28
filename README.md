@@ -4,6 +4,7 @@ A simple project for turtlebot to detect and avoid obstacles
 ## Dependencies
 
 -   ROS Melodic : installation instructions [here](http://wiki.ros.org/melodic/Installation/Ubuntu)
+-   Turtlebot3 : information about the model with installation instructions are given [here](http://wiki.ros.org/turtlebot3)
 -   Ubuntu 18.04
 ## Steps to run
 
