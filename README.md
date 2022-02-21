@@ -1,6 +1,6 @@
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 # turtlebot_obstacle_avoidence
-A simple project for turtlebot to detect and avoid obstacles
+A simple project for turtlebot to detect and avoid obstacles using scans from a planar laser range-finder in ROS
 ## Dependencies
 
 -   ROS Melodic : installation instructions [here](http://wiki.ros.org/melodic/Installation/Ubuntu)
